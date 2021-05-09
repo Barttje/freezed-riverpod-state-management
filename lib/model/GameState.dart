@@ -8,7 +8,9 @@ part 'GameState.freezed.dart';
 
 @freezed
 abstract class GameState with _$GameState {
-  factory GameState(Map<Tile, PlayerType> tiles,
-      {@Default(PlayerType.CIRCLE) PlayerType currentPlayer,
-      Progress progress}) = _GameState;
+  factory GameState(
+    Map<Tile, PlayerType> tiles, {
+    @Default(PlayerType.CIRCLE) PlayerType currentPlayer,
+    Progress progress,
+  }) = _GameState;
 }

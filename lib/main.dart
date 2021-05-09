@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_riverpod_state/screen/Tiles.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
   runApp(ProviderScope(child: TicTacToe()));
@@ -15,10 +15,11 @@ class TicTacToe extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-          appBar: AppBar(
-            title: Text("Flutter Freezed - Riverpod Example"),
-          ),
-          body: Tiles()),
+        appBar: AppBar(
+          title: Text("Flutter Freezed - Riverpod Example"),
+        ),
+        body: Tiles(),
+      ),
     );
   }
 }
