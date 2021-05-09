@@ -9,8 +9,8 @@ import 'package:freezed_riverpod_state/screen/CirclePainter.dart';
 import 'package:freezed_riverpod_state/screen/CrossPainter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final _gameState =
-    StateNotifierProvider<GameStateNotifier, GameState>((_) => GameStateNotifier(GameState(Map())));
+final _gameState = StateNotifierProvider<GameStateNotifier, GameState>(
+    (_) => GameStateNotifier(GameState(Map())));
 
 class Tiles extends HookWidget {
   @override
@@ -18,7 +18,9 @@ class Tiles extends HookWidget {
     final gameState = useProvider(_gameState);
 
     useValueChanged(gameState.progress, (progress, __) {
-      progress.when(finished: (winner) => triggerDialog(context, winner), inProgress: null);
+      progress.when(
+          finished: (winner) => triggerDialog(context, winner),
+          inProgress: null);
     });
 
     return Container(
@@ -28,7 +30,9 @@ class Tiles extends HookWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        children: gameState.tiles.entries.map<Widget>((entry) => TileWidget(entry)).toList(),
+        children: gameState.tiles.entries
+            .map<Widget>((entry) => TileWidget(entry))
+            .toList(),
       ),
     );
   }

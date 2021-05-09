@@ -29,7 +29,8 @@ class GameStateNotifier extends StateNotifier<GameState> {
     state = state.copyWith(
         currentPlayer: PlayerType.CIRCLE,
         progress: Progress.inProgress(),
-        tiles: state.tiles.map((key, value) => MapEntry(key, PlayerType.EMPTY)));
+        tiles:
+            state.tiles.map((key, value) => MapEntry(key, PlayerType.EMPTY)));
   }
 
   Progress _determineProgress() {
@@ -54,7 +55,10 @@ class GameStateNotifier extends StateNotifier<GameState> {
     if (_hasThreeInARow(PlayerType.CROSS)) {
       return FinishedState.CROSS;
     }
-    if (state.tiles.entries.where((element) => element.value == PlayerType.EMPTY).toList().length ==
+    if (state.tiles.entries
+            .where((element) => element.value == PlayerType.EMPTY)
+            .toList()
+            .length ==
         0) {
       return FinishedState.DRAW;
     }
@@ -62,13 +66,16 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   bool _hasThreeInARow(PlayerType player) {
-    var tiles =
-        state.tiles.entries.where((element) => element.value == player).map((e) => e.key).toList();
+    var tiles = state.tiles.entries
+        .where((element) => element.value == player)
+        .map((e) => e.key)
+        .toList();
 
     if (tiles.where((element) => element.y == element.x).toList().length == 3) {
       return true;
     }
-    if (tiles.where((element) => 2 - element.y == element.y).toList().length == 3) {
+    if (tiles.where((element) => 2 - element.y == element.y).toList().length ==
+        3) {
       return true;
     }
     for (int i = 0; i < 3; i++) {
