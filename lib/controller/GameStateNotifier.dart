@@ -3,7 +3,7 @@ import 'package:freezed_riverpod_state/model/GameState.dart';
 import 'package:freezed_riverpod_state/model/PlayerType.dart';
 import 'package:freezed_riverpod_state/model/Progress.dart';
 import 'package:freezed_riverpod_state/model/Tile.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class GameStateNotifier extends StateNotifier<GameState> {
   GameStateNotifier(GameState state) : super(state) {

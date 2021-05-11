@@ -9,22 +9,20 @@ import 'package:freezed_riverpod_state/screen/CirclePainter.dart';
 import 'package:freezed_riverpod_state/screen/CrossPainter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final _gameState =
-    StateNotifierProvider((_) => GameStateNotifier(GameState(Map())));
-final _tiles = Provider((ref) => ref.watch(_gameState.state).tiles);
-final progress = Provider((ref) => ref.watch(_gameState.state).progress);
-final _currentTile = ScopedProvider<MapEntry<Tile, PlayerType>>(null);
+final _gameState = StateNotifierProvider<GameStateNotifier, GameState>(
+    (_) => GameStateNotifier(GameState(Map())));
 
 class Tiles extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    var currentTiles = useProvider(_tiles);
-    var _winner = useProvider(progress);
-    useValueChanged(_winner, (_, __) {
-      _winner.maybeWhen(
+    final gameState = useProvider(_gameState);
+
+    useValueChanged(gameState.progress, (progress, __) {
+      progress.when(
           finished: (winner) => triggerDialog(context, winner),
-          orElse: () => {});
+          inProgress: null);
     });
+
     return Container(
       child: GridView.count(
         physics: new NeverScrollableScrollPhysics(),
@@ -32,10 +30,8 @@ class Tiles extends HookWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        children: currentTiles.entries
-            .map((entry) => ProviderScope(
-                overrides: [_currentTile.overrideWithValue(entry)],
-                child: TileWidget()))
+        children: gameState.tiles.entries
+            .map<Widget>((entry) => TileWidget(entry))
             .toList(),
       ),
     );
@@ -43,25 +39,28 @@ class Tiles extends HookWidget {
 
   void triggerDialog(BuildContext context, FinishedState finishState) {
     Future.delayed(
-        const Duration(milliseconds: 900),
-        () => showDialog<void>(
-            context: context,
-            barrierDismissible: false, // user must tap button!
-            builder: (BuildContext context) {
-              return FinishDialog(finishState);
-            }));
+      const Duration(milliseconds: 900),
+      () => showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (_) => FinishDialog(finishState),
+      ),
+    );
   }
 }
 
 class TileWidget extends HookWidget {
-  const TileWidget({Key key}) : super(key: key);
+  const TileWidget(this.tileEntry, {Key key}) : super(key: key);
+
   final Duration duration = const Duration(milliseconds: 700);
+  final MapEntry<Tile, PlayerType> tileEntry;
 
   @override
   Widget build(BuildContext context) {
-    final tileEntry = useProvider(_currentTile);
     final _controller = useAnimationController(
-        duration: duration, lowerBound: 0, upperBound: 100, initialValue: 0);
+      duration: duration,
+      upperBound: 100,
+    );
     useValueChanged(tileEntry.value, (_, __) {
       if (tileEntry.value == PlayerType.EMPTY) {
         _controller.reset();
@@ -84,36 +83,35 @@ class TileWidget extends HookWidget {
 
   Widget emptyWidget(BuildContext context, Tile tile) {
     return GestureDetector(
-        onTap: () => {context.read(_gameState).toggle(tile)},
-        child: Container(
-          color: Colors.green[600],
-        ));
+      onTap: () => context.read(_gameState.notifier).toggle(tile),
+      child: Container(
+        color: Colors.green[600],
+      ),
+    );
   }
 
   Widget crossWidget(AnimationController _controller) {
     return AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Container(
-            color: Colors.green[600],
-            child: CustomPaint(
-              painter: CrossPainter(_controller.value),
-            ),
-          );
-        });
+      animation: _controller,
+      builder: (context, child) => Container(
+        color: Colors.green[600],
+        child: CustomPaint(
+          painter: CrossPainter(_controller.value),
+        ),
+      ),
+    );
   }
 
   Widget circleWidget(AnimationController _controller) {
     return AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Container(
-            color: Colors.green[600],
-            child: CustomPaint(
-              painter: CirclePainter(_controller.value),
-            ),
-          );
-        });
+      animation: _controller,
+      builder: (context, child) => Container(
+        color: Colors.green[600],
+        child: CustomPaint(
+          painter: CirclePainter(_controller.value),
+        ),
+      ),
+    );
   }
 }
 
@@ -154,7 +152,7 @@ class FinishDialog extends StatelessWidget {
         TextButton(
           child: Text('Play Again'),
           onPressed: () {
-            context.read(_gameState).reset();
+            context.read(_gameState.notifier).reset();
             Navigator.of(context).pop();
           },
         ),
