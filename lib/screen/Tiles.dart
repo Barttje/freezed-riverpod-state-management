@@ -7,20 +7,22 @@ import 'package:freezed_riverpod_state/model/Tile.dart';
 import 'package:freezed_riverpod_state/model/FinishedState.dart';
 import 'package:freezed_riverpod_state/screen/CirclePainter.dart';
 import 'package:freezed_riverpod_state/screen/CrossPainter.dart';
+import 'package:freezed_riverpod_state/model/Progress.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final _gameState = StateNotifierProvider<GameStateNotifier, GameState>(
+final StateNotifierProvider<GameStateNotifier, GameState> _gameState = StateNotifierProvider<GameStateNotifier, GameState>(
     (_) => GameStateNotifier(GameState(Map())));
 
 class Tiles extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final gameState = useProvider(_gameState);
+    final GameState gameState = useProvider(_gameState);
+    final Progress progress = gameState.progress;
 
-    useValueChanged(gameState.progress, (progress, __) {
+    useValueChanged<Progress, Function (Progress, Progress)> (progress, (Progress oldProgress, __) {
       progress.when(
           finished: (winner) => triggerDialog(context, winner),
-          inProgress: null);
+          inProgress: () => Progress.inProgress());
     });
 
     return Container(
@@ -50,7 +52,7 @@ class Tiles extends HookWidget {
 }
 
 class TileWidget extends HookWidget {
-  const TileWidget(this.tileEntry, {Key key}) : super(key: key);
+  const TileWidget(this.tileEntry, {Key? key}) : super(key: key);
 
   final Duration duration = const Duration(milliseconds: 700);
   final MapEntry<Tile, PlayerType> tileEntry;
@@ -61,7 +63,7 @@ class TileWidget extends HookWidget {
       duration: duration,
       upperBound: 100,
     );
-    useValueChanged(tileEntry.value, (_, __) {
+    useValueChanged<PlayerType, Function (PlayerType, PlayerType)> (tileEntry.value, (_, __) {
       if (tileEntry.value == PlayerType.EMPTY) {
         _controller.reset();
       }
@@ -78,7 +80,6 @@ class TileWidget extends HookWidget {
       case PlayerType.EMPTY:
         return emptyWidget(context, tileEntry.key);
     }
-    throw Exception("PlayerType ${tileEntry.value} not supported");
   }
 
   Widget emptyWidget(BuildContext context, Tile tile) {
