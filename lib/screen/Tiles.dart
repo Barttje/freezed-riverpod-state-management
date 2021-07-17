@@ -140,6 +140,7 @@ class FinishDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(_gameState.notifier);
     return AlertDialog(
       title: Text(title()),
       content: SingleChildScrollView(
@@ -153,7 +154,7 @@ class FinishDialog extends HookConsumerWidget {
         TextButton(
           child: Text('Play Again'),
           onPressed: () {
-            ref.watch(_gameState.notifier).reset();
+            provider.reset();
             Navigator.of(context).pop();
           },
         ),
