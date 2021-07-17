@@ -28,7 +28,8 @@ class Tiles extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gameState = ref.watch(_gameState);
-    useValueChanged<Progress, Progress>(gameState.progress, (progress, __) {
+    useValueChanged<Progress, Function(Progress, Progress)>(gameState.progress,
+        (progress, __) {
       gameState.progress.when(
           finished: (winner) => {triggerDialog(context, winner)},
           inProgress: () => {});
@@ -61,7 +62,8 @@ class TileWidget extends HookConsumerWidget {
       duration: duration,
       upperBound: 100,
     );
-    useValueChanged<PlayerType, PlayerType>(tileEntry.value, (_, __) {
+    useValueChanged<PlayerType, Function(PlayerType, PlayerType)>(
+        tileEntry.value, (_, __) {
       if (tileEntry.value == PlayerType.EMPTY) {
         _controller.reset();
       }
