@@ -48,7 +48,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
     return PlayerType.CIRCLE;
   }
 
-  FinishedState isFinished() {
+  FinishedState? isFinished() {
     if (_hasThreeInARow(PlayerType.CIRCLE)) {
       return FinishedState.CIRCLE;
     }
