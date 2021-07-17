@@ -116,7 +116,7 @@ class TileWidget extends HookConsumerWidget {
   }
 }
 
-class FinishDialog extends StatelessWidget {
+class FinishDialog extends HookConsumerWidget {
   final FinishedState _winner;
 
   FinishDialog(this._winner);
@@ -139,7 +139,7 @@ class FinishDialog extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       title: Text(title()),
       content: SingleChildScrollView(
@@ -153,7 +153,7 @@ class FinishDialog extends StatelessWidget {
         TextButton(
           child: Text('Play Again'),
           onPressed: () {
-//            ref.watch(_gameState.notifier).reset();
+            ref.watch(_gameState.notifier).reset();
             Navigator.of(context).pop();
           },
         ),
