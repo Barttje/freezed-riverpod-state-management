@@ -13,7 +13,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
         tiles.putIfAbsent(Tile(x, y), () => PlayerType.EMPTY);
       }
     }
-    this.state = state.copyWith(tiles: tiles);
+    this.state = state.copyWith(tiles: tiles, progress: Progress.inProgress());
   }
 
   toggle(Tile tile) {
@@ -48,7 +48,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
     return PlayerType.CIRCLE;
   }
 
-  FinishedState isFinished() {
+  FinishedState? isFinished() {
     if (_hasThreeInARow(PlayerType.CIRCLE)) {
       return FinishedState.CIRCLE;
     }

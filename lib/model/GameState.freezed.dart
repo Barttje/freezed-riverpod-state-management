@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'GameState.dart';
 
@@ -9,33 +9,35 @@ part of 'GameState.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$GameStateTearOff {
   const _$GameStateTearOff();
 
-// ignore: unused_element
-  _GameState call(Map<Tile, PlayerType> tiles,
-      {PlayerType currentPlayer = PlayerType.CIRCLE, Progress progress}) {
+  _GameState call(Map<Tile, PlayerType> tiles, Progress progress,
+      {PlayerType currentPlayer = PlayerType.CIRCLE}) {
     return _GameState(
       tiles,
+      progress,
       currentPlayer: currentPlayer,
-      progress: progress,
     );
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GameState = _$GameStateTearOff();
 
 /// @nodoc
 mixin _$GameState {
-  Map<Tile, PlayerType> get tiles;
-  PlayerType get currentPlayer;
-  Progress get progress;
+  Map<Tile, PlayerType> get tiles => throw _privateConstructorUsedError;
+  Progress get progress => throw _privateConstructorUsedError;
+  PlayerType get currentPlayer => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $GameStateCopyWith<GameState> get copyWith;
+  $GameStateCopyWith<GameState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -44,8 +46,8 @@ abstract class $GameStateCopyWith<$Res> {
       _$GameStateCopyWithImpl<$Res>;
   $Res call(
       {Map<Tile, PlayerType> tiles,
-      PlayerType currentPlayer,
-      Progress progress});
+      Progress progress,
+      PlayerType currentPlayer});
 
   $ProgressCopyWith<$Res> get progress;
 }
@@ -60,24 +62,28 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object tiles = freezed,
-    Object currentPlayer = freezed,
-    Object progress = freezed,
+    Object? tiles = freezed,
+    Object? progress = freezed,
+    Object? currentPlayer = freezed,
   }) {
     return _then(_value.copyWith(
-      tiles: tiles == freezed ? _value.tiles : tiles as Map<Tile, PlayerType>,
+      tiles: tiles == freezed
+          ? _value.tiles
+          : tiles // ignore: cast_nullable_to_non_nullable
+              as Map<Tile, PlayerType>,
+      progress: progress == freezed
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as Progress,
       currentPlayer: currentPlayer == freezed
           ? _value.currentPlayer
-          : currentPlayer as PlayerType,
-      progress: progress == freezed ? _value.progress : progress as Progress,
+          : currentPlayer // ignore: cast_nullable_to_non_nullable
+              as PlayerType,
     ));
   }
 
   @override
   $ProgressCopyWith<$Res> get progress {
-    if (_value.progress == null) {
-      return null;
-    }
     return $ProgressCopyWith<$Res>(_value.progress, (value) {
       return _then(_value.copyWith(progress: value));
     });
@@ -92,8 +98,8 @@ abstract class _$GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
   @override
   $Res call(
       {Map<Tile, PlayerType> tiles,
-      PlayerType currentPlayer,
-      Progress progress});
+      Progress progress,
+      PlayerType currentPlayer});
 
   @override
   $ProgressCopyWith<$Res> get progress;
@@ -110,38 +116,44 @@ class __$GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tiles = freezed,
-    Object currentPlayer = freezed,
-    Object progress = freezed,
+    Object? tiles = freezed,
+    Object? progress = freezed,
+    Object? currentPlayer = freezed,
   }) {
     return _then(_GameState(
-      tiles == freezed ? _value.tiles : tiles as Map<Tile, PlayerType>,
+      tiles == freezed
+          ? _value.tiles
+          : tiles // ignore: cast_nullable_to_non_nullable
+              as Map<Tile, PlayerType>,
+      progress == freezed
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as Progress,
       currentPlayer: currentPlayer == freezed
           ? _value.currentPlayer
-          : currentPlayer as PlayerType,
-      progress: progress == freezed ? _value.progress : progress as Progress,
+          : currentPlayer // ignore: cast_nullable_to_non_nullable
+              as PlayerType,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_GameState implements _GameState {
-  _$_GameState(this.tiles,
-      {this.currentPlayer = PlayerType.CIRCLE, this.progress})
-      : assert(tiles != null),
-        assert(currentPlayer != null);
+  _$_GameState(this.tiles, this.progress,
+      {this.currentPlayer = PlayerType.CIRCLE});
 
   @override
   final Map<Tile, PlayerType> tiles;
+  @override
+  final Progress progress;
   @JsonKey(defaultValue: PlayerType.CIRCLE)
   @override
   final PlayerType currentPlayer;
-  @override
-  final Progress progress;
 
   @override
   String toString() {
-    return 'GameState(tiles: $tiles, currentPlayer: $currentPlayer, progress: $progress)';
+    return 'GameState(tiles: $tiles, progress: $progress, currentPlayer: $currentPlayer)';
   }
 
   @override
@@ -150,20 +162,20 @@ class _$_GameState implements _GameState {
         (other is _GameState &&
             (identical(other.tiles, tiles) ||
                 const DeepCollectionEquality().equals(other.tiles, tiles)) &&
-            (identical(other.currentPlayer, currentPlayer) ||
-                const DeepCollectionEquality()
-                    .equals(other.currentPlayer, currentPlayer)) &&
             (identical(other.progress, progress) ||
                 const DeepCollectionEquality()
-                    .equals(other.progress, progress)));
+                    .equals(other.progress, progress)) &&
+            (identical(other.currentPlayer, currentPlayer) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentPlayer, currentPlayer)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(tiles) ^
-      const DeepCollectionEquality().hash(currentPlayer) ^
-      const DeepCollectionEquality().hash(progress);
+      const DeepCollectionEquality().hash(progress) ^
+      const DeepCollectionEquality().hash(currentPlayer);
 
   @JsonKey(ignore: true)
   @override
@@ -172,16 +184,17 @@ class _$_GameState implements _GameState {
 }
 
 abstract class _GameState implements GameState {
-  factory _GameState(Map<Tile, PlayerType> tiles,
-      {PlayerType currentPlayer, Progress progress}) = _$_GameState;
+  factory _GameState(Map<Tile, PlayerType> tiles, Progress progress,
+      {PlayerType currentPlayer}) = _$_GameState;
 
   @override
-  Map<Tile, PlayerType> get tiles;
+  Map<Tile, PlayerType> get tiles => throw _privateConstructorUsedError;
   @override
-  PlayerType get currentPlayer;
+  Progress get progress => throw _privateConstructorUsedError;
   @override
-  Progress get progress;
+  PlayerType get currentPlayer => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$GameStateCopyWith<_GameState> get copyWith;
+  _$GameStateCopyWith<_GameState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

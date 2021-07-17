@@ -4,7 +4,7 @@ import 'package:freezed_riverpod_state/model/FinishedState.dart';
 part 'Progress.freezed.dart';
 
 @freezed
-abstract class Progress with _$Progress {
+class Progress with _$Progress {
   factory Progress.finished(FinishedState winner) = Finished;
   factory Progress.inProgress() = InProgress;
 }

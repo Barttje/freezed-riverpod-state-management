@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:freezed_riverpod_state/controller/GameStateNotifier.dart';
 import 'package:freezed_riverpod_state/model/GameState.dart';
 import 'package:freezed_riverpod_state/model/PlayerType.dart';
+import 'package:freezed_riverpod_state/model/Progress.dart';
 import 'package:freezed_riverpod_state/model/Tile.dart';
 import 'package:freezed_riverpod_state/model/FinishedState.dart';
 import 'package:freezed_riverpod_state/screen/CirclePainter.dart';
 import 'package:freezed_riverpod_state/screen/CrossPainter.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final _gameState = StateNotifierProvider<GameStateNotifier, GameState>(
-    (_) => GameStateNotifier(GameState(Map())));
+    (_) => GameStateNotifier(GameState(Map(), Progress.inProgress())));
 
-class Tiles extends HookWidget {
+class Tiles extends HookConsumerWidget {
+  void triggerDialog(BuildContext context, FinishedState finishState) {
+    Future.delayed(
+      const Duration(milliseconds: 900),
+      () => showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (_) => FinishDialog(finishState),
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
-    final gameState = useProvider(_gameState);
-
-    useValueChanged(gameState.progress, (progress, __) {
-      progress.when(
-          finished: (winner) => triggerDialog(context, winner),
-          inProgress: null);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gameState = ref.watch(_gameState);
+    useValueChanged<Progress, Progress>(gameState.progress, (progress, __) {
+      gameState.progress.when(
+          finished: (winner) => {triggerDialog(context, winner)},
+          inProgress: () => {});
     });
 
     return Container(
@@ -36,32 +47,21 @@ class Tiles extends HookWidget {
       ),
     );
   }
-
-  void triggerDialog(BuildContext context, FinishedState finishState) {
-    Future.delayed(
-      const Duration(milliseconds: 900),
-      () => showDialog(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (_) => FinishDialog(finishState),
-      ),
-    );
-  }
 }
 
-class TileWidget extends HookWidget {
-  const TileWidget(this.tileEntry, {Key key}) : super(key: key);
+class TileWidget extends HookConsumerWidget {
+  const TileWidget(this.tileEntry);
 
   final Duration duration = const Duration(milliseconds: 700);
   final MapEntry<Tile, PlayerType> tileEntry;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _controller = useAnimationController(
       duration: duration,
       upperBound: 100,
     );
-    useValueChanged(tileEntry.value, (_, __) {
+    useValueChanged<PlayerType, PlayerType>(tileEntry.value, (_, __) {
       if (tileEntry.value == PlayerType.EMPTY) {
         _controller.reset();
       }
@@ -76,14 +76,13 @@ class TileWidget extends HookWidget {
       case PlayerType.CIRCLE:
         return circleWidget(_controller);
       case PlayerType.EMPTY:
-        return emptyWidget(context, tileEntry.key);
+        return emptyWidget(ref, tileEntry.key);
     }
-    throw Exception("PlayerType ${tileEntry.value} not supported");
   }
 
-  Widget emptyWidget(BuildContext context, Tile tile) {
+  Widget emptyWidget(WidgetRef ref, Tile tile) {
     return GestureDetector(
-      onTap: () => context.read(_gameState.notifier).toggle(tile),
+      onTap: () => ref.watch(_gameState.notifier).toggle(tile),
       child: Container(
         color: Colors.green[600],
       ),
@@ -152,7 +151,7 @@ class FinishDialog extends StatelessWidget {
         TextButton(
           child: Text('Play Again'),
           onPressed: () {
-            context.read(_gameState.notifier).reset();
+//            ref.watch(_gameState.notifier).reset();
             Navigator.of(context).pop();
           },
         ),

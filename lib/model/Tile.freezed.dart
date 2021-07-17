@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'Tile.dart';
 
@@ -9,11 +9,13 @@ part of 'Tile.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$TileTearOff {
   const _$TileTearOff();
 
-// ignore: unused_element
   _Tile call(int x, int y) {
     return _Tile(
       x,
@@ -23,16 +25,15 @@ class _$TileTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Tile = _$TileTearOff();
 
 /// @nodoc
 mixin _$Tile {
-  int get x;
-  int get y;
+  int get x => throw _privateConstructorUsedError;
+  int get y => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TileCopyWith<Tile> get copyWith;
+  $TileCopyWith<Tile> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -52,12 +53,18 @@ class _$TileCopyWithImpl<$Res> implements $TileCopyWith<$Res> {
 
   @override
   $Res call({
-    Object x = freezed,
-    Object y = freezed,
+    Object? x = freezed,
+    Object? y = freezed,
   }) {
     return _then(_value.copyWith(
-      x: x == freezed ? _value.x : x as int,
-      y: y == freezed ? _value.y : y as int,
+      x: x == freezed
+          ? _value.x
+          : x // ignore: cast_nullable_to_non_nullable
+              as int,
+      y: y == freezed
+          ? _value.y
+          : y // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -81,21 +88,26 @@ class __$TileCopyWithImpl<$Res> extends _$TileCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object x = freezed,
-    Object y = freezed,
+    Object? x = freezed,
+    Object? y = freezed,
   }) {
     return _then(_Tile(
-      x == freezed ? _value.x : x as int,
-      y == freezed ? _value.y : y as int,
+      x == freezed
+          ? _value.x
+          : x // ignore: cast_nullable_to_non_nullable
+              as int,
+      y == freezed
+          ? _value.y
+          : y // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_Tile implements _Tile {
-  _$_Tile(this.x, this.y)
-      : assert(x != null),
-        assert(y != null);
+  const _$_Tile(this.x, this.y);
 
   @override
   final int x;
@@ -130,13 +142,13 @@ class _$_Tile implements _Tile {
 }
 
 abstract class _Tile implements Tile {
-  factory _Tile(int x, int y) = _$_Tile;
+  const factory _Tile(int x, int y) = _$_Tile;
 
   @override
-  int get x;
+  int get x => throw _privateConstructorUsedError;
   @override
-  int get y;
+  int get y => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TileCopyWith<_Tile> get copyWith;
+  _$TileCopyWith<_Tile> get copyWith => throw _privateConstructorUsedError;
 }

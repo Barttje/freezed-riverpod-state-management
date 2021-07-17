@@ -7,10 +7,10 @@ import 'Tile.dart';
 part 'GameState.freezed.dart';
 
 @freezed
-abstract class GameState with _$GameState {
+class GameState with _$GameState {
   factory GameState(
-    Map<Tile, PlayerType> tiles, {
+    Map<Tile, PlayerType> tiles,
+    Progress progress, {
     @Default(PlayerType.CIRCLE) PlayerType currentPlayer,
-    Progress progress,
   }) = _GameState;
 }
